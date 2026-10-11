@@ -18,6 +18,7 @@ export function SignOutButton() {
           },
         })
       }
+      className="h-9 rounded-lg border border-line-strong px-3.5 text-[13px] text-neutral-300 transition hover:border-muted hover:text-white"
     >
       Sign out
     </button>
