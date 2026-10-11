@@ -28,7 +28,7 @@ export function UploadSection() {
   const [uploaded, setUploaded] = useState<Uploaded[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
 
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+  const { startUpload, isUploading } = useUploadThing("fileUploader", {
     onUploadProgress: setProgress,
     onClientUploadComplete: (res) => {
       setUploaded((prev) => [
