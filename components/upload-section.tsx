@@ -2,23 +2,12 @@
 
 import { useRef, useState } from "react";
 import { useUploadThing } from "@/utils/uploadthing";
+import { formatSize } from "@/utils/format";
 
 type Uploaded = { key: string; name: string; size: number; url: string };
 
 const ghost =
   "inline-flex h-11 items-center rounded-lg border border-line-strong px-4 text-sm text-neutral-200 transition hover:border-muted hover:text-white";
-
-function formatSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  const units = ["KB", "MB", "GB"];
-  let n = bytes / 1024;
-  let i = 0;
-  while (n >= 1024 && i < units.length - 1) {
-    n /= 1024;
-    i++;
-  }
-  return `${n.toFixed(n >= 100 ? 0 : 1)} ${units[i]}`;
-}
 
 export function UploadSection() {
   const inputRef = useRef<HTMLInputElement>(null);
