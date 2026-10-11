@@ -86,7 +86,6 @@ export function LoginForm() {
         <Link
           href="/sign-up"
           className="text-white underline underline-offset-4"
-          prefetch={false}
         >
           Sign up
         </Link>

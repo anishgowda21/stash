@@ -98,11 +98,7 @@ export function SignUpForm() {
 
       <p className="mt-6 text-center text-sm text-muted">
         Already have an account?{" "}
-        <Link
-          href="/login"
-          className="text-white underline underline-offset-4"
-          prefetch={false}
-        >
+        <Link href="/login" className="text-white underline underline-offset-4">
           Sign in
         </Link>
       </p>

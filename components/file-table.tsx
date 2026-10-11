@@ -43,7 +43,10 @@ export function FileTable({ rows }: { rows: FileRowData[] }) {
     return (
       <p className="rounded-xl border border-line bg-surface p-8 text-center text-muted">
         Nothing here yet.{" "}
-        <Link href="/" className="text-white underline underline-offset-4">
+        <Link
+          href="/"
+          className="text-white underline underline-offset-4"
+        >
           Upload your first file
         </Link>
       </p>
