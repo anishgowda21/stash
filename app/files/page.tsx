@@ -6,7 +6,7 @@ import { db } from "@/utils/database";
 import { filesTable } from "@/db/file-schema";
 import { getSession } from "@/utils/session";
 import { formatSize } from "@/utils/format";
-import { FileActions } from "@/components/file-actions";
+import { FileTable } from "@/components/file-table";
 
 export default function FilesPage() {
   return (
@@ -33,6 +33,13 @@ async function FilesContent() {
 
   const total = rows.reduce((sum, r) => sum + r.size, 0);
   const date = new Intl.DateTimeFormat("en-IN", { dateStyle: "medium" });
+  const data = rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    url: r.url,
+    sizeLabel: formatSize(r.size),
+    dateLabel: date.format(r.createdAt),
+  }));
 
   return (
     <>
@@ -60,42 +67,7 @@ async function FilesContent() {
           </Link>
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-line bg-surface">
-          <div className="min-w-215">
-            <div
-              className={`${cols} py-3.5 font-mono text-xs uppercase tracking-widest text-muted`}
-            >
-              <span>Name</span>
-              <span>Link</span>
-              <span>Size</span>
-              <span>Uploaded</span>
-              <span />
-            </div>
-            {rows.map((r) => (
-              <div
-                key={r.id}
-                className={`${cols} border-t border-line py-3 text-sm`}
-              >
-                <span className="truncate" title={r.name}>
-                  {r.name}
-                </span>
-                <span
-                  className="truncate font-mono text-[13px] text-muted"
-                  title={r.url}
-                >
-                  {r.url}
-                </span>
-                <span className="font-mono text-[13px] text-muted">
-                  {formatSize(r.size)}
-                </span>
-                <span className="text-[13px] text-muted">
-                  {date.format(r.createdAt)}
-                </span>
-                <FileActions id={r.id} url={r.url} />
-              </div>
-            ))}
-          </div>
-        </div>
+        <FileTable rows={data} />
       )}
     </>
   );

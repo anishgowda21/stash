@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { deleteFile } from "@/app/files/actions";
+import { useState } from "react";
 
 const btn =
-  "inline-flex h-9 items-center rounded-lg border border-line-strong px-3 text-[13px] text-neutral-300 transition hover:border-muted hover:text-white disabled:opacity-50";
+  "inline-flex h-9 items-center rounded-lg border border-line-strong px-3 text-[13px] text-neutral-300 transition hover:border-muted hover:text-white";
 
-export function FileActions({ id, url }: { id: string; url: string }) {
+export function FileActions({
+  url,
+  onDelete,
+}: {
+  url: string;
+  onDelete: () => void;
+}) {
   const [copied, setCopied] = useState(false);
-  const [pending, start] = useTransition();
 
   async function copy() {
     try {
@@ -16,18 +20,6 @@ export function FileActions({ id, url }: { id: string; url: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {}
-  }
-
-  function remove() {
-    if (!confirm("Delete this file permanently? Its link will stop working."))
-      return;
-    start(async () => {
-      try {
-        await deleteFile(id);
-      } catch (e) {
-        alert(e instanceof Error ? e.message : "Delete failed");
-      }
-    });
   }
 
   return (
@@ -41,11 +33,10 @@ export function FileActions({ id, url }: { id: string; url: string }) {
       <button
         type="button"
         aria-label="Delete"
-        disabled={pending}
-        onClick={remove}
+        onClick={onDelete}
         className={`${btn} w-9 justify-center`}
       >
-        {pending ? "…" : "×"}
+        ×
       </button>
     </div>
   );

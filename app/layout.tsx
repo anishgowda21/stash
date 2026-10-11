@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
+import { Toaster } from "sonner";
 
 const sans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -28,6 +29,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Header />
         </Suspense>
         {children}
+        <Toaster
+          theme="dark"
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#121417",
+              border: "1px solid #2a2f36",
+              color: "#e7e9ec",
+            },
+          }}
+        />
       </body>
     </html>
   );

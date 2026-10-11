@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useUploadThing } from "@/utils/uploadthing";
 import { formatSize } from "@/utils/format";
+import { toast } from "sonner";
 
 type Uploaded = { key: string; name: string; size: number; url: string };
 
@@ -30,10 +31,16 @@ export function UploadSection() {
         ...prev,
       ]);
       setProgress(0);
+      toast.success(
+        res.length === 1
+          ? `Uploaded ${res[0].name}`
+          : `Uploaded ${res.length} files`,
+      );
     },
     onUploadError: (e) => {
       setError(e.message);
       setProgress(0);
+      toast.error(e.message);
     },
   });
 
