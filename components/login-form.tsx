@@ -9,6 +9,9 @@ export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const label = "font-mono text-xs uppercase tracking-widest text-muted";
+  const input =
+    "h-11 w-full rounded-lg border border-line-strong bg-surface px-3.5 text-[15px] text-white outline-none focus:border-accent";
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,21 +31,66 @@ export function LoginForm() {
   }
 
   return (
-    <div>
-      <form onSubmit={onSubmit} className="flex flex-col gap-3">
-        <input name="email" type="email" placeholder="Email" required />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-        />
-        {error && <p className="text-red-500">{error}</p>}
-        <button disabled={loading}>
+    <div className="w-full max-w-sm rounded-2xl border border-line bg-surface p-8">
+      <div className="mb-6 flex items-center gap-2.5 font-mono font-medium">
+        <span className="size-4.5 rounded-[5px] bg-accent" />
+        stash
+      </div>
+      <h1 className="text-2xl font-semibold">Sign in</h1>
+      <p className="mt-1.5 text-sm text-muted">
+        Your private file drop. Welcome back.
+      </p>
+
+      <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="email" className={label}>
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            className={input}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="password" className={label}>
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            className={input}
+          />
+        </div>
+        {error && (
+          <p role="alert" className="text-sm text-red-400">
+            {error}
+          </p>
+        )}
+        <button
+          disabled={loading}
+          className="h-11 rounded-lg bg-accent font-semibold text-bg transition hover:brightness-110 disabled:opacity-60"
+        >
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
-      <Link href="/sign-up">Sign up</Link>
+
+      <p className="mt-6 text-center text-sm text-muted">
+        No account?{" "}
+        <Link
+          href="/sign-up"
+          className="text-white underline underline-offset-4"
+          prefetch={false}
+        >
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }

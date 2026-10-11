@@ -1,5 +1,3 @@
-import { auth } from "@/utils/auth";
-import { headers } from "next/headers";
 import { SignOutButton } from "./sign-out-button";
 import { getSession } from "@/utils/session";
 

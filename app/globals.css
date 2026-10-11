@@ -2,3 +2,35 @@
 @import "uploadthing/tw/v4";
 
 @source "../node_modules/@uploadthing/react/dist";
+
+/* :root {
+  --color-bg: #0b0c0e;
+  --color-surface: #121417;
+  --color-line: #23272d;
+  --color-line-strong: #2a2f36;
+  --color-muted: #8a919b;
+  --color-accent: #c8f169;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+} */
+
+@theme {
+  --color-bg: #0b0c0e;
+  --color-surface: #121417;
+  --color-line: #23272d;
+  --color-line-strong: #2a2f36;
+  --color-muted: #8a919b;
+  --color-accent: #c8f169;
+}
+
+@theme inline {
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--color-bg);
+  color: #e7e9ec;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
