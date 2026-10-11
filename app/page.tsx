@@ -1,21 +1,26 @@
-"use client";
+import { redirect } from "next/navigation";
+import { UploadSection } from "@/components/upload-section";
+import { Suspense } from "react";
+import { getSession } from "@/utils/session";
 
-import { UploadButton } from "@/utils/uploadthing";
+export default function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Suspense fallback={<p>Loading…</p>}>
+        <SessionContent />
+      </Suspense>
+    </main>
+  );
+}
 
-export default function Home(){
-    return(
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res)=>{
-                    console.log("Files: ",res);
-                    alert("Upload Completed");
-                }}
-                onUploadError={(error: Error) => {
-          // Do something with the error.
-          alert(`ERROR! ${error.message}`);
-        }}
-        />
-        </main>
-    );
+async function SessionContent() {
+  const session = await getSession();
+  if (!session) redirect("/login");
+
+  return (
+    <>
+      <p>Signed in as {session.user.name}</p>
+      <UploadSection />
+    </>
+  );
 }

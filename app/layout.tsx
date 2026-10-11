@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { Header } from "@/components/header";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Stash",
@@ -9,10 +10,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-    >
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }
