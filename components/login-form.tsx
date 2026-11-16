@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/utils/auth-client";
 import Link from "next/link";
@@ -9,12 +9,24 @@ export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const form = formRef.current;
+    return () => {
+      form?.reset();
+      setError(null);
+      setLoading(false);
+    };
+  }, []);
+
   const label = "font-mono text-xs uppercase tracking-widest text-muted";
   const input =
     "h-11 w-full rounded-lg border border-line-strong bg-surface px-3.5 text-[15px] text-white outline-none focus:border-accent";
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formEl = e.currentTarget;
     setLoading(true);
     setError(null);
     const form = new FormData(e.currentTarget);
@@ -24,8 +36,12 @@ export function LoginForm() {
       password: form.get("password") as string,
     });
 
-    setLoading(false);
-    if (error) return setError(error.message ?? "Something went wrong");
+    if (error) {
+      (formEl.elements.namedItem("password") as HTMLInputElement).value = "";
+      setLoading(false);
+      return setError(error.message ?? "Something went wrong");
+    }
+
     router.push("/");
     router.refresh(); // makes server components re-read the new session
   }
@@ -41,7 +57,11 @@ export function LoginForm() {
         Your private file drop. Welcome back.
       </p>
 
-      <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
+      <form
+        ref={formRef}
+        onSubmit={onSubmit}
+        className="mt-6 flex flex-col gap-5"
+      >
         <div className="flex flex-col gap-1.5">
           <label htmlFor="email" className={label}>
             Email
