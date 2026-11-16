@@ -8,6 +8,9 @@ export const auth = betterAuth({
     provider: "sqlite",
     schema,
   }),
+  session: {
+    cookieCache: { enabled: true, maxAge: 5 * 60 },
+  },
   emailAndPassword: {
     enabled: true,
     disableSignUp: process.env.DISABLE_SIGNUP ? true : false,
